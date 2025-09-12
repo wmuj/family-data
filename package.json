@@ -12,7 +12,15 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "start": "node server.mjs",
+    "deploy:docker": "./quick-deploy.sh",
+    "deploy:production": "./deploy.sh",
+    "health-check": "./health-check.sh",
+    "docker:build": "docker build -t family-data:latest .",
+    "docker:run": "docker run -p 3001:3001 family-data:latest",
+    "docker:compose": "docker-compose up -d",
+    "docker:compose:down": "docker-compose down"
   },
   "dependencies": {
     "@faker-js/faker": "^9.9.0",

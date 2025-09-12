@@ -43,15 +43,45 @@
 
 - Node.js >= 20.19.0 或 >= 22.12.0
 - npm 或 yarn
+- Docker (可选，用于容器化部署)
 
-### 安装依赖
+### 快速部署
+
+#### 🐳 Docker 一键部署（推荐）
 
 ```bash
-# 安装前端依赖
+# 克隆项目
+git clone <your-repo-url>
+cd family-data
+
+# 交互式快速部署
+./quick-deploy.sh
+
+# 或直接运行简单部署
+docker compose -f docker-compose.simple.yml up -d
+```
+
+#### 📦 传统部署
+
+```bash
+# 安装依赖
 npm install
 
-# 安装后端依赖（首次运行）
-npm install express cors node-fetch dotenv nodemon
+# 构建项目
+npm run build
+
+# 启动服务
+npm start
+```
+
+### 部署验证
+
+```bash
+# 健康检查
+./health-check.sh
+
+# 访问应用
+curl http://localhost:3001/api/health
 ```
 
 ### 启动服务
@@ -199,23 +229,34 @@ GET /api/health
 
 ```
 family-data/
-├── src/                    # 前端源码
-│   ├── components/         # Vue组件
-│   │   ├── CacheStatus.vue # 缓存状态组件
-│   │   └── ...            # 其他组件
-│   ├── pages/             # 页面组件
-│   ├── utils/             # 工具函数
-│   │   ├── cacheManager.js # 缓存管理器
-│   │   ├── api.js         # API工具(集成缓存)
-│   │   ├── llmGenerator.js # LLM生成器(集成缓存)
-│   │   └── ...            # 其他工具
-│   └── stores/            # 状态管理
-├── server.mjs             # 后端服务
-├── start-quick.bat        # 快速启动脚本(Windows)
-├── start-quick.sh         # 快速启动脚本(Linux/Mac)
-├── start-server.bat       # 完整启动脚本(Windows)
-├── start-server.sh        # 完整启动脚本(Linux/Mac)
-└── package.json           # 项目配置
+├── src/                          # 前端源码
+│   ├── components/               # Vue组件
+│   │   ├── CacheStatus.vue       # 缓存状态组件
+│   │   └── ...                   # 其他组件
+│   ├── pages/                    # 页面组件
+│   ├── utils/                    # 工具函数
+│   │   ├── cacheManager.js       # 缓存管理器
+│   │   ├── api.js                # API工具(集成缓存)
+│   │   ├── llmGenerator.js       # LLM生成器(集成缓存)
+│   │   └── ...                   # 其他工具
+│   └── stores/                   # 状态管理
+├── nginx/                        # Nginx 配置文件
+│   ├── nginx.conf               # 主配置文件
+│   └── conf.d/                  # 站点配置
+├── .github/workflows/           # GitHub Actions CI/CD
+├── server.mjs                   # 后端服务
+├── Dockerfile                   # Docker 镜像配置
+├── docker-compose.yml           # 完整部署配置
+├── docker-compose.simple.yml    # 简单部署配置
+├── deploy.sh                    # 生产部署脚本
+├── quick-deploy.sh              # 快速部署脚本
+├── health-check.sh              # 健康检查脚本
+├── test-deployment.sh           # 部署测试脚本
+├── vercel.json                  # Vercel 部署配置
+├── railway.json                 # Railway 部署配置
+├── DEPLOYMENT.md                # 详细部署文档
+├── QUICK-DEPLOY.md              # 快速部署指南
+└── package.json                 # 项目配置
 ```
 
 ## 🛠️ 开发指南
@@ -234,6 +275,37 @@ npm run format
 
 # 构建生产版本
 npm run build
+
+# 启动生产服务器
+npm start
+```
+
+### 部署命令
+
+```bash
+# 快速部署测试
+npm run deploy:docker
+
+# 生产环境部署
+npm run deploy:production
+
+# 健康检查
+npm run health-check
+
+# Docker 相关
+npm run docker:build          # 构建镜像
+npm run docker:run            # 运行容器
+npm run docker:compose        # 启动完整环境
+npm run docker:compose:down   # 停止环境
+```
+
+### 部署测试
+
+```bash
+# 运行部署测试套件
+./test-deployment.sh
+
+# 检查各种部署配置的有效性
 ```
 
 ### 环境变量
@@ -247,6 +319,49 @@ OPENAI_API_KEY=your_openai_api_key
 ZHIPU_API_KEY=your_zhipu_api_key
 CLAUDE_API_KEY=your_claude_api_key
 ```
+
+## 🚀 部署指南
+
+### 多种部署方式
+
+1. **🐳 Docker 部署** - 容器化部署，支持开发和生产环境
+2. **☁️ 云平台部署** - 支持 Vercel、Railway、Heroku 等平台
+3. **🖥️ 传统服务器部署** - PM2 + Nginx 生产级配置
+4. **⚡ 快速开发部署** - 本地 Node.js 直接运行
+
+### 快速部署
+
+```bash
+# 交互式快速部署（推荐新手）
+./quick-deploy.sh
+
+# Docker 简单部署
+docker compose -f docker-compose.simple.yml up -d
+
+# Docker 完整部署（包含 Nginx + Redis）
+docker compose up -d
+
+# 传统服务器部署
+./deploy.sh
+```
+
+### 部署验证
+
+```bash
+# 健康检查
+./health-check.sh
+
+# 部署测试
+./test-deployment.sh
+
+# 手动检查
+curl http://localhost:3001/api/health
+```
+
+### 部署文档
+
+- 📖 [完整部署文档](./DEPLOYMENT.md) - 详细的部署指南
+- ⚡ [快速部署指南](./QUICK-DEPLOY.md) - 简化的部署步骤
 
 ## 🐛 故障排除
 

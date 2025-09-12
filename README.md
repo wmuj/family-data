@@ -44,7 +44,9 @@
 - Node.js >= 20.19.0 或 >= 22.12.0
 - npm 或 yarn
 
-### 安装依赖
+### 本地开发
+
+#### 安装依赖
 
 ```bash
 # 安装前端依赖
@@ -54,9 +56,9 @@ npm install
 npm install express cors node-fetch dotenv nodemon
 ```
 
-### 启动服务
+#### 启动服务
 
-#### 方式一：快速启动（推荐）
+##### 方式一：快速启动（推荐）
 
 ```bash
 # Windows
@@ -66,7 +68,7 @@ start-quick.bat
 ./start-quick.sh
 ```
 
-#### 方式二：完整启动（包含依赖安装）
+##### 方式二：完整启动（包含依赖安装）
 
 ```bash
 # Windows
@@ -76,7 +78,7 @@ start-server.bat
 ./start-server.sh
 ```
 
-#### 方式三：手动启动
+##### 方式三：手动启动
 
 ```bash
 # 启动后端服务
@@ -86,11 +88,32 @@ node server.mjs
 npm run dev
 ```
 
-### 访问应用
+#### 访问应用
 
 - **前端界面**：http://localhost:5173
 - **后端API**：http://localhost:3001
 - **API文档**：http://localhost:3001/api/health
+
+### 🚀 生产部署
+
+#### Docker 部署（推荐）
+
+```bash
+# 一键部署
+./deploy.sh
+
+# 或使用 Docker Compose
+docker-compose up -d
+```
+
+#### 云平台部署
+
+- **Railway**: 连接 GitHub 仓库自动部署
+- **Heroku**: 使用 Heroku CLI 部署
+- **DigitalOcean**: App Platform 一键部署
+- **Vercel**: 前端静态部署
+
+详细部署指南请查看 [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ## 📖 使用指南
 
@@ -210,12 +233,25 @@ family-data/
 │   │   ├── llmGenerator.js # LLM生成器(集成缓存)
 │   │   └── ...            # 其他工具
 │   └── stores/            # 状态管理
-├── server.mjs             # 后端服务
-├── start-quick.bat        # 快速启动脚本(Windows)
-├── start-quick.sh         # 快速启动脚本(Linux/Mac)
-├── start-server.bat       # 完整启动脚本(Windows)
-├── start-server.sh        # 完整启动脚本(Linux/Mac)
-└── package.json           # 项目配置
+├── deploy/                # 部署配置
+│   ├── app.json          # Heroku部署配置
+│   ├── railway.toml      # Railway部署配置
+│   └── cloud-deploy.sh   # 云平台部署脚本
+├── .github/              # GitHub Actions
+│   └── workflows/
+│       └── deploy.yml    # CI/CD工作流
+├── server.mjs            # 后端服务
+├── Dockerfile            # Docker镜像配置
+├── docker-compose.yml    # Docker Compose配置
+├── nginx.conf            # Nginx配置
+├── deploy.sh             # 部署脚本(Linux/Mac)
+├── deploy.bat            # 部署脚本(Windows)
+├── start-quick.bat       # 快速启动脚本(Windows)
+├── start-quick.sh        # 快速启动脚本(Linux/Mac)
+├── start-server.bat      # 完整启动脚本(Windows)
+├── start-server.sh       # 完整启动脚本(Linux/Mac)
+├── DEPLOYMENT.md         # 部署指南
+└── package.json          # 项目配置
 ```
 
 ## 🛠️ 开发指南

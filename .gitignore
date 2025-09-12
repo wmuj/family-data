@@ -28,3 +28,24 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Docker
+docker-compose.override.yml
+
+# SSL certificates
+ssl/
+cert/
+
+# Data directory
+data/
+
+# Deployment artifacts
+*.tar.gz
+*.zip

@@ -1,0 +1,18 @@
+# Railway 部署配置
+# https://railway.app/
+
+# 构建配置
+[build]
+  builder = "DOCKERFILE"
+  dockerfile = "Dockerfile"
+
+# 运行时配置
+[deploy]
+  startCommand = "node server.mjs"
+  restartPolicyType = "ON_FAILURE"
+  restartPolicyMaxRetries = 10
+
+# 环境变量
+[env]
+  NODE_ENV = "production"
+  PORT = { type = "RAILWAY_PORT" }

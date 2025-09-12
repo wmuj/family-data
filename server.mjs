@@ -1,7 +1,22 @@
 import express from 'express'
 import cors from 'cors'
-import fetch from 'node-fetch'
 import dotenv from 'dotenv'
+
+// Use built-in fetch API (Node.js 18+)
+// If node-fetch is needed for older versions, it will be installed in production
+let fetch
+try {
+  // Try using the built-in fetch first (Node.js 18+)
+  fetch = globalThis.fetch
+  if (!fetch) {
+    // Fallback to node-fetch if available
+    const nodeFetch = await import('node-fetch')
+    fetch = nodeFetch.default
+  }
+} catch (error) {
+  console.log('⚠️  Using built-in fetch API')
+  fetch = globalThis.fetch
+}
 
 dotenv.config()
 

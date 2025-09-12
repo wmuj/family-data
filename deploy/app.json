@@ -1,0 +1,53 @@
+{
+  "name": "family-data-generator",
+  "description": "家庭数据生成器 - AI驱动的家庭数据生成工具",
+  "repository": "https://github.com/wmuj/family-data",
+  "logo": "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/family.svg",
+  "keywords": [
+    "family",
+    "data",
+    "generator",
+    "ai",
+    "vue",
+    "nodejs",
+    "llm"
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "Node.js 环境",
+      "value": "production"
+    },
+    "PORT": {
+      "description": "应用端口",
+      "value": "3001"
+    },
+    "DASHSCOPE_API_KEY": {
+      "description": "通义千问 API 密钥",
+      "required": false
+    },
+    "OPENAI_API_KEY": {
+      "description": "OpenAI API 密钥",
+      "required": false
+    },
+    "ZHIPU_API_KEY": {
+      "description": "智谱 AI API 密钥",
+      "required": false
+    },
+    "CLAUDE_API_KEY": {
+      "description": "Claude API 密钥",
+      "required": false
+    }
+  },
+  "image": "heroku/nodejs",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  }
+}

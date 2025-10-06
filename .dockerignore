@@ -1,0 +1,79 @@
+# Docker ignore 文件
+# 忽略不需要打包到 Docker 镜像中的文件
+
+# 依赖目录
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 构建产物 (在容器内构建)
+dist/
+
+# 日志文件
+logs/
+*.log
+
+# 环境变量文件
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDE 配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# Git 相关
+.git/
+.gitignore
+.gitattributes
+
+# Docker 相关
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# 部署脚本
+deploy.sh
+quick-deploy.sh
+health-check.sh
+
+# 文档
+README.md
+DEPLOYMENT.md
+CORS-FIX-README.md
+*.md
+
+# 测试文件
+test/
+tests/
+**/*.test.js
+**/*.spec.js
+
+# 临时文件
+tmp/
+temp/
+.tmp/
+
+# 缓存目录
+.cache/
+.parcel-cache/
+
+# 配置文件
+nginx/
+.github/
+vercel.json
+
+# SSL 证书
+*.pem
+*.key
+*.crt

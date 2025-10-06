@@ -1,0 +1,63 @@
+services:
+  # 主应用服务
+  family-data:
+    build: .
+    container_name: family-data-app
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./logs:/app/logs
+      - ./.env:/app/.env:ro
+    networks:
+      - family-data-network
+    healthcheck:
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:3001/api/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Nginx 反向代理服务
+  nginx:
+    image: nginx:alpine
+    container_name: family-data-nginx
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./dist:/usr/share/nginx/html:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      family-data:
+        condition: service_healthy
+    networks:
+      - family-data-network
+
+  # Redis 缓存服务 (可选)
+  redis:
+    image: redis:7-alpine
+    container_name: family-data-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-defaultpassword}
+    networks:
+      - family-data-network
+
+networks:
+  family-data-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local
